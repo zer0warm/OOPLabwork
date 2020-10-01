@@ -14,21 +14,20 @@ public class IOTasks {
 
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.print("Enter the number of employees: ");
-            int n = scanner.nextInt();
+            int n = Integer.parseInt(scanner.nextLine());
 
             for (int i = 0; i < n; i++) {
                 System.out.printf("Employee #%d:\n", i + 1);
-
                 System.out.print("ID: ");
-                int id = scanner.nextInt();
+                int id = Integer.parseInt(scanner.nextLine());
                 System.out.print("Name: ");
-                String name = scanner.next();
+                String name = scanner.nextLine();
                 System.out.print("Department: ");
-                String department = scanner.next();
+                String department = scanner.nextLine();
                 System.out.print("Basic salary: ");
-                double basicSalary = scanner.nextDouble();
+                double basicSalary = Double.parseDouble(scanner.nextLine());
                 System.out.print("Extra salary: ");
-                double extraSalary = scanner.nextDouble();
+                double extraSalary = Double.parseDouble(scanner.nextLine());
 
                 employeeList.add(new Employee(id, name, department, basicSalary, extraSalary));
             }
