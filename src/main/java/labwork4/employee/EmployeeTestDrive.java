@@ -7,7 +7,7 @@ public class EmployeeTestDrive {
         String emFilePath = "src/main/java/labwork4/employee/employees.txt";
         List<Employee> employeeList;
 
-        employeeList = IOTasks.readInfoFromStdin();
+        employeeList = IOTasks.readEmployeesFromStdin();
         IOTasks.writeInfoToFile(emFilePath, employeeList);
 
         employeeList = IOTasks.readInfoFromFile(emFilePath);

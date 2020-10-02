@@ -9,31 +9,40 @@ import java.util.List;
 import java.util.Scanner;
 
 public class IOTasks {
-    public static List<Employee> readInfoFromStdin() {
+    public static List<Employee> readEmployeesFromStdin() {
         List<Employee> employeeList = new ArrayList<>();
 
         try (Scanner scanner = new Scanner(System.in)) {
-            System.out.print("Enter the number of employees: ");
-            int n = Integer.parseInt(scanner.nextLine());
+            int n = readNumberOfEmployeesFromScanner(scanner);
 
             for (int i = 0; i < n; i++) {
                 System.out.printf("Employee #%d:\n", i + 1);
-                System.out.print("ID: ");
-                int id = Integer.parseInt(scanner.nextLine());
-                System.out.print("Name: ");
-                String name = scanner.nextLine();
-                System.out.print("Department: ");
-                String department = scanner.nextLine();
-                System.out.print("Basic salary: ");
-                double basicSalary = Double.parseDouble(scanner.nextLine());
-                System.out.print("Extra salary: ");
-                double extraSalary = Double.parseDouble(scanner.nextLine());
-
-                employeeList.add(new Employee(id, name, department, basicSalary, extraSalary));
+                Employee e = readEmployeeFromScanner(scanner);
+                employeeList.add(e);
             }
         }
 
         return employeeList;
+    }
+
+    private static int readNumberOfEmployeesFromScanner(Scanner scanner) {
+        System.out.print("Enter the number of employees: ");
+        return Integer.parseInt(scanner.nextLine());
+    }
+
+    private static Employee readEmployeeFromScanner(Scanner scanner) {
+        System.out.print("ID: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        System.out.print("Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Department: ");
+        String department = scanner.nextLine();
+        System.out.print("Basic salary: ");
+        double basicSalary = Double.parseDouble(scanner.nextLine());
+        System.out.print("Extra salary: ");
+        double extraSalary = Double.parseDouble(scanner.nextLine());
+
+        return new Employee(id, name, department, basicSalary, extraSalary);
     }
 
     public static List<Employee> readInfoFromFile(String path) {
