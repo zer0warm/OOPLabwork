@@ -49,13 +49,14 @@ public class IOTasks {
         List<Employee> employeeList = new ArrayList<>();
 
         try (Scanner scanner = new Scanner(new File(path))) {
-            // Fine cheating for next data line
-            while (scanner.hasNextInt()) {
-                int id = scanner.nextInt();
-                String name = scanner.next();
-                String department = scanner.next();
-                double basicSalary = scanner.nextDouble();
-                double extraSalary = scanner.nextDouble();
+            while (scanner.hasNextLine()) {
+                String[] infoList = scanner.nextLine().split(Employee.infoDelimiter);
+
+                int id = Integer.parseInt(infoList[0]);
+                String name = infoList[1];
+                String department = infoList[2];
+                double basicSalary = Double.parseDouble(infoList[3]);
+                double extraSalary = Double.parseDouble(infoList[4]);
 
                 Employee employee = new Employee(id, name, department, basicSalary, extraSalary);
                 employee.calculateIncome();

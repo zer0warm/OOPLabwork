@@ -8,6 +8,8 @@ public class Employee {
     private final double extraSalary;
     private double income;
 
+    public static final String infoDelimiter = ":";
+
     public Employee(int id,
                     String name,
                     String department,
@@ -36,10 +38,12 @@ public class Employee {
     }
 
     public String getInfoWithSalaries() {
-        return String.format("%d\t", this.id)
-               + String.format("%-30s", this.name)
-               + String.format("%s\t", this.department)
-               + String.format("%.2f\t", this.basicSalary)
-               + String.format("%.2f", this.extraSalary);
+        var infoArray = new String[] { String.valueOf(id),
+                                       name,
+                                       department,
+                                       String.valueOf(basicSalary),
+                                       String.valueOf(extraSalary) };
+
+        return String.join(infoDelimiter, infoArray);
     }
 }
