@@ -1,12 +1,7 @@
 package labwork4.employee;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class IOTasks {
     public static List<Employee> readEmployeesFromStdin() {
@@ -17,12 +12,39 @@ public class IOTasks {
 
             for (int i = 0; i < n; i++) {
                 System.out.printf("Employee #%d:\n", i + 1);
-                Employee e = readEmployeeFromScanner(scanner);
-                employeeList.add(e);
+                Employee employee = readEmployeeFromScanner(scanner);
+                employeeList.add(employee);
             }
         }
 
         return employeeList;
+    }
+
+    public static List<Employee> readEmployeesFromFile(String path) {
+        List<Employee> employeeList = new ArrayList<>();
+
+        try (Scanner scanner = new Scanner(new File(path))) {
+            while (scanner.hasNextLine()) {
+                String employeeData = scanner.nextLine();
+                Employee employee = makeEmployeeFromData(employeeData);
+                employeeList.add(employee);
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("File does not exist.");
+        }
+
+        return employeeList;
+    }
+
+    public static void writeEmployeesToFile(String path, List<Employee> employeeList) {
+        try (FileWriter writer = new FileWriter(path)) {
+            for (Employee employee : employeeList) {
+                writer.write(employee.getInfoWithSalaries());
+                writer.append('\n');
+            }
+        } catch (IOException e) {
+            System.err.println("File is not accessible.");
+        }
     }
 
     private static int readNumberOfEmployeesFromScanner(Scanner scanner) {
@@ -45,38 +67,18 @@ public class IOTasks {
         return new Employee(id, name, department, basicSalary, extraSalary);
     }
 
-    public static List<Employee> readInfoFromFile(String path) {
-        List<Employee> employeeList = new ArrayList<>();
+    private static Employee makeEmployeeFromData(String dataLine) {
+        String[] infoList = dataLine.split(Employee.infoDelimiter);
 
-        try (Scanner scanner = new Scanner(new File(path))) {
-            while (scanner.hasNextLine()) {
-                String[] infoList = scanner.nextLine().split(Employee.infoDelimiter);
+        int id = Integer.parseInt(infoList[0]);
+        String name = infoList[1];
+        String department = infoList[2];
+        double basicSalary = Double.parseDouble(infoList[3]);
+        double extraSalary = Double.parseDouble(infoList[4]);
 
-                int id = Integer.parseInt(infoList[0]);
-                String name = infoList[1];
-                String department = infoList[2];
-                double basicSalary = Double.parseDouble(infoList[3]);
-                double extraSalary = Double.parseDouble(infoList[4]);
+        Employee employee = new Employee(id, name, department, basicSalary, extraSalary);
+        employee.calculateIncome();
 
-                Employee employee = new Employee(id, name, department, basicSalary, extraSalary);
-                employee.calculateIncome();
-                employeeList.add(employee);
-            }
-        } catch (FileNotFoundException e) {
-            System.err.println("File does not exist.");
-        }
-
-        return employeeList;
-    }
-
-    public static void writeInfoToFile(String path, List<Employee> employeeList) {
-        try (FileWriter writer = new FileWriter(path)) {
-            for (Employee employee : employeeList) {
-                writer.write(employee.getInfoWithSalaries());
-                writer.append('\n');
-            }
-        } catch (IOException e) {
-            System.err.println("File is not accessible.");
-        }
+        return employee;
     }
 }

@@ -8,9 +8,9 @@ public class EmployeeTestDrive {
         List<Employee> employeeList;
 
         employeeList = IOTasks.readEmployeesFromStdin();
-        IOTasks.writeInfoToFile(emFilePath, employeeList);
+        IOTasks.writeEmployeesToFile(emFilePath, employeeList);
 
-        employeeList = IOTasks.readInfoFromFile(emFilePath);
+        employeeList = IOTasks.readEmployeesFromFile(emFilePath);
         System.out.println(Employee.getIncomeTitle());
         for (Employee employee : employeeList) {
             System.out.println(employee.getInfoWithIncome());
